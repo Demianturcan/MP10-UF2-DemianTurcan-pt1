@@ -1,3 +1,4 @@
+# gestio_erp/comandes.py
 class Comanda:
     ESTATS = {
         "PENDENT": "pendent",
@@ -7,32 +8,30 @@ class Comanda:
     def __init__(self, id_comanda, estat=ESTATS["PENDENT"]):
         self.id_comanda = id_comanda
         self.productes = {}
-        self.quantitat = 0
         self.estat = estat
 
     def __repr__(self):
         return (
             f"Comanda {self.id_comanda} [{self.estat}]"
-            f"quantitat={self.quantitat}, "
-            f"productes={self.productes} )"
+            f" productes={self.productes} )"
         )
 
-
     def afegir_producte(self, producte, quantitat=1):
-        if producte in self.productes:
-            self.productes[producte] += quantitat  # si el producte ja existeix augmentem la quantitat
+        if producte.id_producte in self.productes:
+            self.productes[producte.id_producte].quantitat += quantitat
         else:
-            self.productes[producte] = quantitat  # si no afegim el producte amb la nova quantitat
+            producte.quantitat = quantitat
+            self.productes[producte.id_producte] = producte
 
     def total_productes(self):
-        return sum(self.productes.values())  # retorna la quantitat total de productes a la comanda
+        return sum(producte.quantitat for producte in self.productes.values())
 
     def resum_comanda(self):
         resum = f"Resum de la Comanda ID: {self.id_comanda}\n"
         resum += f"Estat: {self.estat}\n"
         resum += "Productes:\n"
-        for producte, quantitat in self.productes.items():
-            resum += f"- {producte.nom_producte}: {quantitat} unitats \n"
+        for producte in self.productes.values():
+            resum += f"- {producte.nom_producte}: {producte.quantitat} unitats \n"
         resum += f"Total de productes: {self.total_productes()}\n"
         return resum
 
@@ -41,3 +40,4 @@ class Comanda:
             self.estat = nou_estat
         else:
             raise ValueError(f"Estat no vàlid: {nou_estat}")
+

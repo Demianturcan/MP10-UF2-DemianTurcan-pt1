@@ -1,5 +1,4 @@
 
-
 class Client:
     def __init__(self, id_client, nom, email):
         self.id_client = id_client
@@ -8,7 +7,14 @@ class Client:
         self.comandes = []
 
     def __repr__(self):
-        return f"client{self.id_client}( id={self.id_client}, nom='{self.nom}', email='{self.email}', "f"comandes={len(self.comandes)} )"
+        return (
+            f"Client {self.id_client} ("
+            f"id={self.id_client}, "
+            f"nom='{self.nom}', "
+            f"email='{self.email}', "
+            f"comandes={len(self.comandes)}"
+            f")"
+        )
 
     def afegir_comanda(self, comanda):
         self.comandes.append(comanda)
